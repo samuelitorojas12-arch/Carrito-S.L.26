@@ -56,32 +56,7 @@ Pruebas:
 ![Mi carrito en la pista](pruebas/imagen1.jpeg)
 ![Mi carrito en la pista](pruebas/video1.mp4)
 ![Mi carrito en la pista](pruebas/video2.mp4)
-## Participación en Eventos
 
-### Expo Inovatek 2026
-
-El proyecto **Seguidor de Línea con FPGA** fue presentado en la **Expo Inovatek 2026**, realizada el **4 de junio de 2026** en el **Gimnasio de la Universidad Veracruzana (UV)**.
-
-Durante la exposición se mostró el funcionamiento del vehículo autónomo, destacando la implementación de una FPGA como unidad principal de control, la integración de sensores TCRT5000 para el seguimiento de línea y el sistema de control de motores para la navegación autónoma.
-
-### Resultado Obtenido
-
- 🏅 **Cuarto Lugar** en la Expo Inovatek 2026.
-
-Este resultado reconoce el trabajo realizado en el diseño, construcción y programación del sistema, así como la aplicación de tecnologías de hardware programable en proyectos de robótica móvil.
-
-### Evidencias
-
-#### Presentación del proyecto
-![Presentación](https://github.com/SpaceText/Seguidor_Linea_FPGA_UV2026./blob/main/pruebas/Imagen2expoInovatek.jpeg)
-
-#### Demostración del funcionamiento
-![Demostración](https://drive.google.com/file/d/1cjfaxPKcUf6BWnYPSk9UGNIVukGlOuq9/view?usp=sharing)
-Video de la demostración:
-https://drive.google.com/file/d/1cjfaxPKcUf6BWnYPSk9UGNIVukGlOuq9/view?usp=sharing
-
-#### Equipo participante
-![Equipo](https://github.com/SpaceText/Seguidor_Linea_FPGA_UV2026./blob/main/pruebas/Imagen3expoInovatek.jpeg)
 
 ### Impacto del Proyecto
 
