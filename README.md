@@ -1,6 +1,6 @@
 # Controlador Digital de Seguidor de Línea Competitivo en FPGA Tang Nano 9K
 
-Este repositorio contiene la implementación completa de elproyecto de la materia de programación avanzada 
+Este repositorio contiene la implementación completa de el proyecto de la materia de programación avanzada.
 
 El diseño está implementado en hardware digital paralelo sobre una FPGA **Gowin GW1NR-LV9QN88PC6/I5** (placa de desarrollo Tang Nano 9K), lo que garantiza latencias de respuesta del orden de los nanosegundos para un seguimiento preciso a altas velocidades.
 
@@ -9,13 +9,15 @@ El diseño está implementado en hardware digital paralelo sobre una FPGA **Gowi
 
 1. **Arranque Autónomo por Luz (LDR):** Cumple con la regla oficial del arranque autónomo. Cuenta con un módulo digital con filtro antirrebote de 10 ms e histéresis temporal que evita arranques falsos ante flashes u oscilaciones de luz ambiental. Una vez detectada la señal de salida, la bandera de carrera se enclava de forma permanente.
 
-2. **Modulación PWM Dual (20.7 kHz):** Provee control continuo de velocidad de 8 bits para dos micromotores N20 a través de un puente H TB6612FNG, eliminando ruidos audibles en los bobinados y optimizando la entrega de torque.
+2. **Comunicación Inalámbrica por Bluetooth (HC-05):** Se incorporó soporte para un módulo Bluetooth HC-05 conectado mediante una interfaz UART implementada en la FPGA Tang Nano 9K. Esta funcionalidad permite la transmisión inalámbrica de información de diagnóstico, monitoreo de sensores y recepción de comandos externos para pruebas y futuras expansiones del sistema sin necesidad de conexión física por cable.
 
-3. **Giro por Pivoteo Activo (Curvas Cerradas):** En curvas críticas, el sistema invierte físicamente el sentido de giro del motor interno (marcha atrás) y acelera el externo hacia adelante. Esto proporciona un torque diferencial máximo para virajes de emergencia sin pérdida de adherencia.
+4. **Modulación PWM Dual (20.7 kHz):** Provee control continuo de velocidad de 8 bits para dos micromotores N20 a través de un puente H TB6612FNG, eliminando ruidos audibles en los bobinados y optimizando la entrega de torque.
 
-4. **Algoritmo de Recuperación Inteligente:** Al perder el contraste de la pista (`00000`), el robot recuerda su última dirección conocida y gira sobre su propio eje en ese sentido para reincorporarse. Si tras 2 segundos no recupera la línea, se detiene automáticamente por seguridad.
+5. **Giro por Pivoteo Activo (Curvas Cerradas):** En curvas críticas, el sistema invierte físicamente el sentido de giro del motor interno (marcha atrás) y acelera el externo hacia adelante. Esto proporciona un torque diferencial máximo para virajes de emergencia sin pérdida de adherencia.
 
-5. **Comunicación Inalámbrica por Bluetooth (HC-05):** Se incorporó soporte para un módulo Bluetooth HC-05 conectado mediante una interfaz UART implementada en la FPGA Tang Nano 9K. Esta funcionalidad permite la transmisión inalámbrica de información de diagnóstico, monitoreo de sensores y recepción de comandos externos para pruebas y futuras expansiones del sistema sin necesidad de conexión física por cable.
+6. **Algoritmo de Recuperación Inteligente:** Al perder el contraste de la pista (`00000`), el robot recuerda su última dirección conocida y gira sobre su propio eje en ese sentido para reincorporarse. Si tras 2 segundos no recupera la línea, se detiene automáticamente por seguridad.
+
+7. **Leds indicadores de estatus:** Un led rojo indica el estatus de reposo mientras que un led verde indica que el carrito se enciuentra en labor.
 
 ---
 
@@ -28,6 +30,7 @@ El diseño está implementado en hardware digital paralelo sobre una FPGA **Gowi
 * Sensor LDR para arranque autónomo
 * Módulo Bluetooth HC-05 para comunicación inalámbrica UART
 * Batería LiPo de 7.4 V
+* Leds de colores indicadores de estado
 
 ---
 
@@ -55,6 +58,8 @@ La arquitectura fue diseñada para permitir futuras ampliaciones sin afectar el 
     *   `controlador_pwm.v`: Generador PWM de 20.7 kHz para motores.
     *   `seguidor_linea.cst`: Restricciones de pines físicos (corregido a 1.8V para el Banco 3).
     *   `seguidor_linea.sdc`: Restricciones de frecuencia de reloj de 27 MHz (0 Warnings).
+    *   `arranque_bt.v`: Restricciones de frecuencia de reloj de 27 MHz (0 Warnings).
+    *   `uart_rx.v`: Restricciones de frecuencia de reloj de 27 MHz (0 Warnings).
 *   **`tb/`**: Suite de simulación.
     *   `seguidor_linea_tb.v`: Banco de pruebas completo para verificar transiciones de sensores, arranque, PWM y recuperación en simuladores HDL.
 *   **`doc/`**: Documentación de ingeniería.
