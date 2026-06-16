@@ -1,19 +1,50 @@
 # Controlador Digital de Seguidor de Línea Competitivo en FPGA Tang Nano 9K
 
-Este repositorio contiene la implementación completa de la **Etapa 3** del controlador digital de seguidor de línea desarrollado para la **"2ª Carrera de Carritos Seguidores de Línea 2026"** de la **Universidad Veracruzana**.
+Este repositorio contiene la implementación completa de elproyecto de la materia de programación avanzada 
 
 El diseño está implementado en hardware digital paralelo sobre una FPGA **Gowin GW1NR-LV9QN88PC6/I5** (placa de desarrollo Tang Nano 9K), lo que garantiza latencias de respuesta del orden de los nanosegundos para un seguimiento preciso a altas velocidades.
 
 ---
+## Características Competitivas del Diseño
 
-##  Características Competitivas del Diseño
+1. **Arranque Autónomo por Luz (LDR):** Cumple con la regla oficial del arranque autónomo. Cuenta con un módulo digital con filtro antirrebote de 10 ms e histéresis temporal que evita arranques falsos ante flashes u oscilaciones de luz ambiental. Una vez detectada la señal de salida, la bandera de carrera se enclava de forma permanente.
 
-1.  **Arranque Autónomo por Luz (LDR):** Cumple con la regla oficial del arranque autónomo. Cuenta con un módulo digital con filtro antirrebote de 10 ms e histéresis temporal que evita arranques falsos ante flashes u oscilaciones de luz ambiental. Una vez detectada la señal de salida, la bandera de carrera se enclava de forma permanente.
-2.  **Modulación PWM Dual (20.7 kHz):** Provee control continuo de velocidad de 8 bits para dos micromotores N20 a través de un puente H TB6612FNG, eliminando ruidos audibles en los bobinados y optimizando la entrega de torque.
-3.  **Giro por Pivoteo Activo (Curvas Cerradas):** En curvas críticas, el sistema invierte físicamente el sentido de giro del motor interno (marcha atrás) y acelera el externo hacia adelante. Esto proporciona un torque diferencial máximo para virajes de emergencia sin pérdida de adherencia.
-4.  **Algoritmo de Recuperación Inteligente:** Al perder el contraste de la pista (`00000`), el robot recuerda su última dirección conocida y gira sobre su propio eje en ese sentido para reincorporarse. Si tras 2 segundos no recupera la línea, se detiene automáticamente por seguridad.
+2. **Modulación PWM Dual (20.7 kHz):** Provee control continuo de velocidad de 8 bits para dos micromotores N20 a través de un puente H TB6612FNG, eliminando ruidos audibles en los bobinados y optimizando la entrega de torque.
+
+3. **Giro por Pivoteo Activo (Curvas Cerradas):** En curvas críticas, el sistema invierte físicamente el sentido de giro del motor interno (marcha atrás) y acelera el externo hacia adelante. Esto proporciona un torque diferencial máximo para virajes de emergencia sin pérdida de adherencia.
+
+4. **Algoritmo de Recuperación Inteligente:** Al perder el contraste de la pista (`00000`), el robot recuerda su última dirección conocida y gira sobre su propio eje en ese sentido para reincorporarse. Si tras 2 segundos no recupera la línea, se detiene automáticamente por seguridad.
+
+5. **Comunicación Inalámbrica por Bluetooth (HC-05):** Se incorporó soporte para un módulo Bluetooth HC-05 conectado mediante una interfaz UART implementada en la FPGA Tang Nano 9K. Esta funcionalidad permite la transmisión inalámbrica de información de diagnóstico, monitoreo de sensores y recepción de comandos externos para pruebas y futuras expansiones del sistema sin necesidad de conexión física por cable.
 
 ---
+
+## Hardware Utilizado
+
+* FPGA Tang Nano 9K (Gowin GW1NR-LV9QN88PC6/I5)
+* Arreglo de 5 sensores infrarrojos para detección de línea
+* Driver de motores TB6612FNG
+* Dos motores N20 de corriente continua
+* Sensor LDR para arranque autónomo
+* Módulo Bluetooth HC-05 para comunicación inalámbrica UART
+* Batería LiPo de 7.4 V
+
+---
+
+## Comunicación Bluetooth
+
+El sistema incorpora compatibilidad con el módulo Bluetooth HC-05 mediante una interfaz UART implementada en lógica digital dentro de la FPGA Tang Nano 9K.
+
+Esta funcionalidad permite:
+
+* Monitorear el estado del robot de forma remota.
+* Transmitir información de diagnóstico durante las pruebas.
+* Recibir comandos externos para validación y depuración.
+* Facilitar futuras integraciones con aplicaciones móviles.
+* Registrar información de sensores sin necesidad de conexión física directa.
+
+La arquitectura fue diseñada para permitir futuras ampliaciones sin afectar el desempeño del controlador principal de seguimiento de línea, manteniendo la operación en tiempo real característica de la implementación sobre FPGA.
+
 
 ## Estructura del Repositorio
 
@@ -58,12 +89,7 @@ Pruebas:
 ![Mi carrito en la pista](pruebas/video2.mp4)
 
 
-### Impacto del Proyecto
-
-La participación en la Expo Inovatek 2026 permitió compartir conocimientos sobre el uso de FPGA en sistemas embebidos, fomentar el interés por la robótica y recibir retroalimentación de docentes, estudiantes y asistentes al evento.
-
-
 
 
 ---
-*Desarrollado para la carrera de alcance de seguidores de línea - Facultad de Ingeniería UV, 2026.*
+ - Facultad de Ingeniería UV, 2026.*
