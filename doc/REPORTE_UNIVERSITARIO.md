@@ -75,6 +75,9 @@ La siguiente tabla consolida el mapeo físico de los puertos del controlador a l
 | **LED_IZQ** | Salida | 14 | LVCMOS18 | DRIVE = 8mA | LED Indicador Giro Izq. (LED3 Integrado) |
 | **LED_DER** | Salida | 15 | LVCMOS18 | DRIVE = 8mA | LED Indicador Giro Der. (LED4 Integrado) |
 | **LED_STOP**| Salida | 16 | LVCMOS18 | DRIVE = 8mA | LED Indicador Parada (LED5 Integrado) |
+| **MOD_BLU**| Salida | 27 | LVCMOS33 | Ninguno (Floating)| Modulo Bluetooth |
+| **LED_RED**| Salida | 25 | LVCMOS33 | Ninguno (Floating) | LED Indicador Parada (LED Fisico) |
+| **LED_GREEN**| Salida | 26 | LVCMOS33 | Ninguno (Floating) | LED Indicador Movimiento (LED Fisico) | 
 
 *Nota sobre voltajes de banco:* Todos los pines pertenecientes al Banco 3 (pines 4, 10, 11, 13, 14, 15 y 16) están configurados con el estándar `LVCMOS18` debido a la restricción física de hardware de la Tang Nano 9K (VCCIO hardwired a 1.8V para la PSRAM), evitando fallas durante la fase de Place & Route.
 
