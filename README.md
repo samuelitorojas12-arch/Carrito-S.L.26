@@ -59,7 +59,7 @@ La arquitectura fue diseñada para permitir futuras ampliaciones sin afectar el 
     *   `seguidor_linea.cst`: Restricciones de pines físicos (corregido a 1.8V para el Banco 3).
     *   `seguidor_linea.sdc`: Restricciones de frecuencia de reloj de 27 MHz (0 Warnings).
     *   `arranque_bt.v`: Restricciones de frecuencia de reloj de 27 MHz (0 Warnings).
-    *   `uart_rx.v`: Restricciones de frecuencia de reloj de 27 MHz (0 Warnings).
+    *   `uart_rx.v`: Receptor UART básico a 9600 baudios para leer los comandos enviados por el módulo Bluetooth HC-05.
 *   **`tb/`**: Suite de simulación.
     *   `seguidor_linea_tb.v`: Banco de pruebas completo para verificar transiciones de sensores, arranque, PWM y recuperación en simuladores HDL.
 *   **`doc/`**: Documentación de ingeniería.
