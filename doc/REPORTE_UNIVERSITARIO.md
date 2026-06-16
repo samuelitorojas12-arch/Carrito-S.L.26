@@ -1,11 +1,11 @@
 # Reporte Técnico: Controlador Digital de Seguidor de Línea Competitivo con FPGA Tang Nano 9K
-**Curso: Sistemas Digitales / Diseño con FPGAs**  
+**Curso: Programacion Avanzada / Diseño con FPGAs**  
 **Departamento de Ingeniería Electrónica - Universidad Veracruzana**
 
 ---
 
 ## Resumen
-Este informe detalla el diseño, la implementación y la verificación de un controlador digital modular síncrono para un robot móvil seguidor de línea de alto rendimiento destinado a la competencia oficial "2ª Carrera de Carritos Seguidores de Línea 2026". El sistema, implementado en hardware sobre la FPGA Tang Nano 9K (GW1NR-LV9QN88PC6/I5), integra una estrategia de arranque autónomo por sensor de luz (LDR) con inmunidad al ruido, control de velocidad por modulación de ancho de pulso (PWM) a 20 kHz y un algoritmo de recuperación inteligente por memoria de dirección ante la pérdida de contraste de la pista, con detención de seguridad de 2 segundos. La síntesis y el ruteo físico se realizaron en Gowin EDA, logrando un reporte final de **0 errores y 0 advertencias (warnings)** tras aplicar restricciones de tiempo (.sdc) y resolver conflictos de voltaje en los bancos lógicos del integrado.
+Este informe detalla el diseño, la implementación y la verificación de un controlador digital modular síncrono para un robot móvil seguidor de línea de alto rendimiento destinado a la competencia oficial "2ª Carrera de Carritos Seguidores de Línea 2026" QUE POSTERIORMENTE FUE MODIFICADO Y MEJORADO apartir de comentarios y propuestas del docente. El sistema, implementado en hardware sobre la FPGA Tang Nano 9K (GW1NR-LV9QN88PC6/I5), integra una estrategia de arranque autónomo por sensor de luz (LDR) con inmunidad al ruido, control de velocidad por modulación de ancho de pulso (PWM) a 20 kHz, implementacion de un modulo bluetooth HC-05 con la capacidad de emitir y recibir informacion al usuario y un algoritmo de recuperación inteligente por memoria de dirección ante la pérdida de contraste de la pista, con detención de seguridad de 2 segundos. La síntesis y el ruteo físico se realizaron en Gowin EDA, logrando un reporte final de **0 errores y 0 advertencias (warnings)** tras aplicar restricciones de tiempo (.sdc) y resolver conflictos de voltaje en los bancos lógicos del integrado.
 
 ---
 
@@ -41,7 +41,9 @@ La señal entregada por el comparador LM393 del LDR puede contener oscilaciones 
 ### B. Controlador PWM de Frecuencia Portadora (`controlador_pwm.v`)
 El control continuo de velocidad de los micromotores N20 se realiza mediante Modulación por Ancho de Pulso (PWM). El módulo implementa dos generadores de rampa de 8 bits (resolución de 0 a 255). A partir de la frecuencia de reloj del sistema, se introduce un prescaler divisor entre 5 que disminuye la base de tiempos a un periodo de rampa de $48.3\ \mu\text{s}$, lo que equivale a una frecuencia portadora de **20.7 kHz**. Esta frecuencia ultrasónica es ideal para pequeños servomotores y motores DC metálicos: elimina por completo el molesto silbido mecánico audible en los bobinados y reduce de forma significativa las corrientes de rizado y disipación térmica en el chip driver (TB6612FNG).
 
-### C. Núcleo de Control y Recuperación (`seguidor_linea_core.v`)
+### C. Modulo Bluettoth HC-05 (`arranque_bt.v`)
+
+### D. Núcleo de Control y Recuperación (`seguidor_linea_core.v`)
 El núcleo implementa la máquina de control de velocidad y sentido de giro, traduciendo los estados de los sensores infrarrojos reflectantes ($S_1$ a $S_5$) en salidas de potencia de acuerdo con la tabla de verdad y la estrategia de control competitiva:
 *   **Marcha Recta (`00100`):** Máxima potencia hacia ambos motores (`VEL_MAX = 225`) en sentido directo para recortar distancias en tramos lineales.
 *   **Curvas Suaves (`01100` y `00110`):** Se desacelera levemente el motor interno a la curva (`VEL_MED = 150`) mientras el exterior se mantiene a potencia máxima para realizar correcciones sin detener el carro.
