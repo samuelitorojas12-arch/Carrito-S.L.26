@@ -42,6 +42,7 @@ La señal entregada por el comparador LM393 del LDR puede contener oscilaciones 
 El control continuo de velocidad de los micromotores N20 se realiza mediante Modulación por Ancho de Pulso (PWM). El módulo implementa dos generadores de rampa de 8 bits (resolución de 0 a 255). A partir de la frecuencia de reloj del sistema, se introduce un prescaler divisor entre 5 que disminuye la base de tiempos a un periodo de rampa de $48.3\ \mu\text{s}$, lo que equivale a una frecuencia portadora de **20.7 kHz**. Esta frecuencia ultrasónica es ideal para pequeños servomotores y motores DC metálicos: elimina por completo el molesto silbido mecánico audible en los bobinados y reduce de forma significativa las corrientes de rizado y disipación térmica en el chip driver (TB6612FNG).
 
 ### C. Núcleo de Control y Recuperación (`arranque_bt.v`)
+Escucha los datos validados provenientes del receptor UART. Si recibe el caracter ASCII '1' (Hex 0x31), activa la bandera de inicio (start_flag_bt) y la mantiene enclavada hasta que haya un reset.
 
 
 ### D. Núcleo de Control y Recuperación (`seguidor_linea_core.v`)
