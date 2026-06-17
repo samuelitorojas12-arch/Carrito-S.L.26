@@ -5,7 +5,17 @@
 ---
 
 ## Resumen
-Este informe detalla el diseño, la implementación y la verificación de un controlador digital modular síncrono para un robot móvil seguidor de línea de alto rendimiento destinado a la competencia oficial "2ª Carrera de Carritos Seguidores de Línea 2026" que posteriormente fue mejorado y adaptado para implementar mejorar sugeridas por el docente. El sistema, implementado en hardware sobre la FPGA Tang Nano 9K (GW1NR-LV9QN88PC6/I5), integra una estrategia de arranque autónomo por sensor de luz (LDR) con inmunidad al ruido, ademas de una opcion de arranque y monitoreo de informacion por el modulo bluettoth HC-05, control de velocidad por modulación de ancho de pulso (PWM) a 20 kHz y un algoritmo de recuperación inteligente por memoria de dirección ante la pérdida de contraste de la pista, con detención de seguridad de 2 segundos. La síntesis y el ruteo físico se realizaron en Gowin EDA, logrando un reporte final de **0 errores y 0 advertencias (warnings)** tras aplicar restricciones de tiempo (.sdc) y resolver conflictos de voltaje en los bancos lógicos del integrado.
+
+El presente proyecto consiste en el diseño e implementación de un vehículo robótico seguidor de línea basado en una FPGA Tang Nano 9K, desarrollado para competir en la modalidad de carrera de alcance. El sistema fue diseñado para cumplir estrictamente con el reglamento de competencia, incorporando un mecanismo de arranque autónomo mediante un sensor LDR que detecta la señal luminosa de inicio y evita falsos arranques mediante técnicas de filtrado digital e histéresis temporal.
+
+La arquitectura del controlador está compuesta por módulos independientes que realizan tareas de filtrado de arranque, comunicación Bluetooth, seguimiento de línea, control PWM e indicación visual de estados. Los sensores infrarrojos permiten detectar la posición de la línea en tiempo real, mientras que el núcleo de control implementa estrategias de corrección progresiva y giros por pivote dinámico para mejorar la maniobrabilidad en curvas cerradas y aumentar la velocidad de recuperación ante pérdidas de trayectoria.
+
+Como complemento, se incorporó un módulo Bluetooth HC-05 conectado al pin 27 de la FPGA, permitiendo el control y monitoreo inalámbrico del sistema. Asimismo, se añadieron indicadores visuales mediante un LED rojo conectado al pin 25 y un LED verde conectado al pin 26, los cuales muestran de forma inmediata el estado operativo del vehículo.
+
+El control de velocidad de los motores se realiza mediante señales PWM de alta frecuencia generadas directamente por hardware, proporcionando una respuesta rápida y eficiente. Gracias a la naturaleza paralela de la FPGA, el sistema alcanza tiempos de procesamiento extremadamente bajos, garantizando una reacción inmediata frente a cambios detectados por los sensores.
+
+Las pruebas de simulación confirmaron el correcto funcionamiento del arranque seguro, la detección de línea, los giros de corrección, la recuperación automática de trayectoria y los mecanismos de protección ante pérdida prolongada de la pista. Como resultado, se obtuvo una plataforma robusta, escalable y competitiva, capaz de ofrecer un alto rendimiento en aplicaciones de robótica móvil y competencias de seguimiento de línea.
+
 
 ---
 
