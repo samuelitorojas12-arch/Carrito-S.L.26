@@ -109,9 +109,26 @@ La verificación funcional del controlador se realizó por medio de simulación 
 
 ---
 
-## 5. Conclusiones del Diseño
+## 5.**Conclusiones del Diseño**
 
-1.  **Garantía de Cero Falsos Arranques:** El módulo de histéresis digital del LDR provee inmunidad completa frente a interferencias ópticas de la luz ambiental del auditorio, asegurando que el carro comience su marcha únicamente con la activación del semáforo LED de inicio.
-2.  **Maniobrabilidad con Pivote Dinámico:** El uso de rotación por inversión física de motores en curvas extremas y durante la búsqueda en línea perdida elimina el derrape por inercia lineal, logrando trayectorias más cerradas y rápidas que los algoritmos tradicionales de freno pasivo.
-3.  **Eficiencia y Confiabilidad Eléctrica:** El ajuste del estándar de voltaje a `LVCMOS18` en los puertos del Banco 3 respeta las limitaciones eléctricas del hardware real del Tang Nano 9K, eliminando el riesgo de sobrecalentamiento en los buffers de salida y garantizando un Place & Route limpio con **0 errores y 0 warnings** de compilación.
-4.  **Baja Latencia de Procesamiento:** Al implementarse en hardware digital paralelo sobre la FPGA, el tiempo transcurrido desde que un sensor detecta el cambio de contraste hasta que el driver del motor recibe la modulación del PWM es menor a **40 nanosegundos**, una respuesta miles de veces más rápida que cualquier controlador basado en microcontrolador por software, maximizando las posibilidades de alcance competitivo.
+1. **Garantía de Cero Falsos Arranques:**
+   El módulo de histéresis digital implementado para el sensor LDR proporciona una elevada inmunidad frente a variaciones de iluminación ambiental, reflejos y ruido óptico presentes en el entorno de competencia. Gracias a esta estrategia, el vehículo inicia su operación únicamente cuando detecta la señal luminosa del semáforo de salida, evitando activaciones accidentales y mejorando la confiabilidad general del sistema.
+
+2. **Maniobrabilidad con Pivote Dinámico:**
+   La estrategia de control basada en inversión física de motores durante curvas pronunciadas y condiciones de pérdida de línea permite realizar giros sobre su propio eje. Esta técnica reduce significativamente el derrape causado por la inercia, mejora la capacidad de corrección de trayectoria y aumenta la velocidad de recuperación frente a errores de seguimiento.
+
+3. **Integración de Comunicación Inalámbrica:**
+   La incorporación del módulo Bluetooth HC-05 conectado al pin 27 de la FPGA permite la comunicación inalámbrica con dispositivos externos para tareas de monitoreo, configuración y control. Esta funcionalidad incrementa la flexibilidad del sistema y facilita las pruebas, el diagnóstico y futuras ampliaciones del proyecto sin necesidad de conexiones físicas adicionales.
+
+4. **Sistema de Indicadores Visuales de Estado:**
+   Se implementó un sistema de señalización mediante dos LEDs de estado: un LED rojo conectado al pin 25 y un LED verde conectado al pin 26. Estos indicadores permiten conocer de forma inmediata la condición operativa del vehículo. El LED rojo señala estados de espera, detención o error, mientras que el LED verde indica funcionamiento correcto, conexión activa y operación normal del sistema.
+
+5. **Eficiencia y Confiabilidad Eléctrica:**
+   La configuración de los puertos de salida bajo el estándar LVCMOS18 garantiza la compatibilidad eléctrica con el hardware de la FPGA Tang Nano 9K, respetando las limitaciones de voltaje de sus bancos de E/S. Esto evita problemas de sobrecorriente, sobrecalentamiento y degradación de los componentes, obteniendo además un proceso de síntesis, Place & Route y generación de bitstream libre de errores y advertencias.
+
+6. **Baja Latencia de Procesamiento:**
+   Al ejecutarse completamente en hardware digital paralelo dentro de la FPGA, el sistema procesa simultáneamente las señales de los sensores, los algoritmos de seguimiento de línea y la generación de PWM para los motores. Esto permite alcanzar tiempos de respuesta inferiores a 40 ns entre la detección de un evento y la acción correctiva correspondiente, superando ampliamente el rendimiento de soluciones basadas en microcontroladores tradicionales.
+
+7. **Arquitectura Escalable y Competitiva:**
+   La estructura modular del diseño facilita la incorporación de nuevas funcionalidades, sensores y estrategias de control sin modificar significativamente la arquitectura principal. La combinación de procesamiento paralelo, control preciso de motores, comunicación inalámbrica y monitoreo visual proporciona una plataforma robusta, eficiente y adecuada para aplicaciones de robótica móvil y competencias de seguimiento de línea de alto rendimiento.
+
