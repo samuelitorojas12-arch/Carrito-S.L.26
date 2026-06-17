@@ -84,6 +84,16 @@ El núcleo implementa la máquina de control de velocidad y sentido de giro, tra
 *   **Curvas Críticas / Pivote (`10000` y `00001`):** Para giros de emergencia, el motor interno se invierte físicamente en sentido de retroceso (`VEL_REV = 130`, `dir = 1`) y el exterior se mantiene en avance directo, forzando un giro rápido sobre su propio eje (torque diferencial puro).
 *   **Línea Perdida (`00000`):** Se activa un temporizador de seguridad de $54,000,000$ de ciclos (2 segundos). Mientras corre el tiempo, el núcleo consulta el registro `last_direction` y ordena un giro de pivote en el sentido donde vio por última vez la línea para recuperarla de forma inmediata.
 
+### E. Indicador de Estado (indicador_estado.v`)
+
+El bloque de indicadores visuales controla dos LEDs físicos conectados a la FPGA:
+
+LED Rojo (pin 25): indica estado de espera, detención o error.
+
+LED Verde (pin 26): indica funcionamiento correcto, conexión activa y vehículo en movimiento.
+
+Estos indicadores permiten conocer de forma inmediata el estado operativo del carro durante pruebas y competencias.
+
 ---
 
 ## 3. Mapa de Pines del Sistema
