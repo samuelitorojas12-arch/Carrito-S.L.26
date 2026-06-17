@@ -67,9 +67,11 @@ El control continuo de velocidad de los micromotores N20 se realiza mediante Mod
 
 ### C. Módulo de Comunicación Bluetooth (control_comunicacion.v)
 
-Este módulo administra la comunicación inalámbrica mediante el HC-05 conectado al pin 27 de la FPGA. Supervisa continuamente los datos recibidos por la interfaz UART y valida los comandos provenientes de un dispositivo externo.
+Este módulo es responsable de gestionar la comunicación inalámbrica entre el sistema y dispositivos externos mediante el módulo Bluetooth HC-05, conectado a la FPGA a través de una interfaz UART. Su función principal consiste en supervisar continuamente los datos recibidos, validar los comandos entrantes y garantizar una comunicación confiable durante la operación del vehículo.
 
-Cuando se detecta el carácter ASCII '1' (0x31), el sistema genera la señal enable/start_flag_bt, habilitando la operación del vehículo. La bandera queda enclavada para evitar pérdidas de estado por interrupciones temporales en la comunicación, y únicamente puede restablecerse mediante un reset del sistema.
+Cuando el receptor detecta el carácter ASCII '1' (0x31), interpretado como una orden válida de inicio, el módulo activa la señal start_flag_bt, habilitando el funcionamiento del robot seguidor de línea. Para incrementar la robustez del sistema frente a posibles interrupciones, pérdidas temporales de enlace o errores de transmisión, esta bandera permanece enclavada una vez activada, conservando el estado de arranque incluso si la comunicación Bluetooth se interrumpe momentáneamente.
+
+La señal únicamente puede restablecerse mediante un reinicio del sistema, garantizando un comportamiento estable, predecible y seguro durante las pruebas y la competencia.
 
 La integración Bluetooth permite realizar pruebas, monitoreo y control inalámbrico, facilitando el diagnóstico y futuras expansiones del proyecto.
 
