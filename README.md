@@ -73,12 +73,27 @@ La arquitectura fue diseñada para permitir futuras ampliaciones sin afectar el 
 
 ##  Verificación de Requisitos (Comité Técnico)
 
-*   **Línea de seguimiento:** Negra, de 2 cm sobre fondo blanco.
-*   **Sensores utilizados:** Arreglo frontal de 5 sensores infrarrojos.
-*   **Arranque autónomo:** Detección digital por LDR estable (DO a Pin 33).
-*   **Dimensiones físicas máximas:** largo: $\le 24\text{ cm}$, ancho: $\le 20\text{ cm}$ (Dimensiones del prototipo: $18\text{ cm} \times 14\text{ cm}$).
-*   **Alimentación:** Batería LiPo interna de 2 celdas (7.4V) debidamente aislada.
-*   **Peso aproximado del prototipo:** En proceso de pesaje y calibración (estimado < 250g para maximizar aceleración).
+Con el objetivo de garantizar la conformidad del prototipo con las especificaciones establecidas por el comité organizador de la competencia, se realizó una verificación de los principales requisitos técnicos y constructivos del sistema:
+
+Línea de Seguimiento:
+El vehículo fue diseñado para operar sobre una pista compuesta por una línea negra de 2 cm de ancho trazada sobre una superficie de color blanco, cumpliendo con las características definidas en el reglamento oficial.
+
+Sistema de Sensado:
+La detección de trayectoria se realiza mediante un arreglo frontal de cinco sensores infrarrojos reflectantes, distribuidos estratégicamente para proporcionar una cobertura amplia de la pista y permitir una respuesta rápida ante cambios de dirección.
+
+Arranque Autónomo:
+El sistema incorpora un mecanismo de arranque automático basado en una fotoresistencia LDR conectada a un comparador LM393. La señal digital resultante es procesada por la FPGA a través del Pin 33, donde se aplica un filtrado temporal para validar la señal de inicio y evitar activaciones erróneas ocasionadas por ruido o variaciones de iluminación ambiental.
+
+Dimensiones del Prototipo:
+El reglamento establece dimensiones máximas de 24 cm de largo y 20 cm de ancho. El vehículo desarrollado presenta unas dimensiones aproximadas de 18 cm × 14 cm, manteniéndose dentro de los límites permitidos y favoreciendo una mayor maniobrabilidad durante el recorrido.
+
+Sistema de Alimentación:
+La energía del sistema es suministrada por una batería LiPo de 2 celdas (7.4 V), integrada de forma segura dentro del chasis y con el aislamiento eléctrico necesario para garantizar un funcionamiento confiable de la electrónica de control y potencia.
+
+Peso del Vehículo:
+El peso final del prototipo se encuentra en proceso de validación y calibración. No obstante, el diseño ha sido optimizado para mantener una masa reducida, estimada en menos de 250 gramos, con el propósito de maximizar la aceleración, mejorar la respuesta dinámica y reducir las pérdidas por inercia durante las maniobras de giro.
+
+En conjunto, estas características permiten concluir que el prototipo cumple satisfactoriamente con los requerimientos técnicos establecidos para la competencia, proporcionando una plataforma compacta, ligera y adecuada para la implementación de estrategias avanzadas de seguimiento de línea basadas en FPGA.
 
 ---
 
