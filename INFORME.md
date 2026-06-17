@@ -24,15 +24,26 @@ El diseño de un vehículo robótico seguidor de línea de competencia (modalida
 Para reducir al mínimo la latencia del lazo de control y optimizar la mantenibilidad del software de descripción de hardware, el diseño se dividió en cuatro módulos principales interconectados de forma síncrona a un dominio de reloj de 27 MHz:
 
 ```
-[Entradas]                            [Núcleo de Procesamiento FPGA]                            [Salidas]
-  CLK (52)  -----------------------> [  filtro_arranque  ]                                   
-  LDR (33)  ----------------------->      |                                                  
-                                          v (start_flag)                                     
-  S1...S5   -----------------------> [  seguidor_linea_core ] ----------------------------->  Dirección Motores
-  (28...32)                               |                                                   (34 y 35)
-                                          v (duty_cycle)                                     
-                                     [  controlador_pwm   ] ----------------------------->  Velocidad Motores (PWM)
-                                                                                              (10 y 11)
+[Entradas]                                [Núcleo de Procesamiento FPGA]                               [Salidas]
+
+  CLK (52)  ---------------------------> [  filtro_arranque  ]
+                                               |
+  LDR (33)  ---------------------------------->|
+                                               v (start_flag)
+
+  HC-05 Bluetooth (RX/TX) (27) ----------> [  control_comunicacion  ]
+                                               |
+                                               v (enable/estado)
+
+  S1...S5 (28...32) ---------------------> [  seguidor_linea_core ] -------------------------> Dirección Motores
+                                               |                                                 (34 y 35)
+                                               v (duty_cycle)
+
+                                          [  controlador_pwm   ] ---------------------------> Velocidad Motores (PWM)
+                                                                                               (10 y 11)
+
+                                          [  indicador_estado  ] ---------------------------> LED Rojo (25)
+                                                                                               LED Verde (26)
 ```
 
 ### A. Filtro del Sensor de Arranque LDR (`filtro_arranque.v`)
