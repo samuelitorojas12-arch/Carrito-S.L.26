@@ -65,10 +65,13 @@ Una vez validado el arranque, la señal queda enclavada permanentemente en ‘1�
 ### B. Controlador PWM de Frecuencia Portadora (`controlador_pwm.v`)
 El control continuo de velocidad de los micromotores N20 se realiza mediante Modulación por Ancho de Pulso (PWM). El módulo implementa dos generadores de rampa de 8 bits (resolución de 0 a 255). A partir de la frecuencia de reloj del sistema, se introduce un prescaler divisor entre 5 que disminuye la base de tiempos a un periodo de rampa de $48.3\ \mu\text{s}$, lo que equivale a una frecuencia portadora de **20.7 kHz**. Esta frecuencia ultrasónica es ideal para pequeños servomotores y motores DC metálicos: elimina por completo el molesto silbido mecánico audible en los bobinados y reduce de forma significativa las corrientes de rizado y disipación térmica en el chip driver (TB6612FNG).
 
-### C. Núcleo de Control y Recuperación (arranque_bt.v)
+### C. Módulo de Comunicación Bluetooth (control_comunicacion.v)
 
-Este módulo constituye el núcleo de control encargado de gestionar la secuencia de arranque del sistema a través de comunicación Bluetooth. Supervisa continuamente los datos validados por el receptor UART y analiza la información recibida. Cuando detecta el carácter ASCII **'1'** (código hexadecimal **0x31**), activa la señal **start_flag_bt**, la cual indica que se ha recibido una orden válida de inicio. Una vez activada, esta bandera permanece enclavada para garantizar la conservación del estado de arranque, evitando pérdidas de la señal por interrupciones o variaciones temporales. La señal solo puede restablecerse mediante un reinicio (**reset**) del sistema, asegurando un funcionamiento estable y confiable.
+Este módulo administra la comunicación inalámbrica mediante el HC-05 conectado al pin 27 de la FPGA. Supervisa continuamente los datos recibidos por la interfaz UART y valida los comandos provenientes de un dispositivo externo.
 
+Cuando se detecta el carácter ASCII '1' (0x31), el sistema genera la señal enable/start_flag_bt, habilitando la operación del vehículo. La bandera queda enclavada para evitar pérdidas de estado por interrupciones temporales en la comunicación, y únicamente puede restablecerse mediante un reset del sistema.
+
+La integración Bluetooth permite realizar pruebas, monitoreo y control inalámbrico, facilitando el diagnóstico y futuras expansiones del proyecto.
 
 
 ### D. Núcleo de Control y Recuperación (`seguidor_linea_core.v`)
