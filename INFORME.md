@@ -57,7 +57,10 @@ Para reducir al mínimo la latencia del lazo de control y optimizar la mantenibi
 ```
 
 ### A. Filtro del Sensor de Arranque LDR (`filtro_arranque.v`)
-La señal entregada por el comparador LM393 del LDR puede contener oscilaciones y transitorios causados por la luz ambiental o el encendido de flashes en la pista. El módulo de arranque implementa un contador digital de histéresis temporal. Requiere que la entrada `LDR_IN` se mantenga en nivel alto de forma ininterrumpida por al menos 10 ms ($270,000$ ciclos a 27 MHz) antes de activar la bandera `start_flag`. Una vez activada, la señal se enclava de forma irreversible en `1` hasta que ocurra un reset físico de la tarjeta, evitando que las sombras generadas por el propio carro durante la carrera afecten la marcha.
+
+La señal entregada por el comparador LM393 asociado a la fotoresistencia LDR puede presentar oscilaciones y transitorios provocados por la iluminación ambiental, reflejos o flashes presentes en la pista. Para garantizar un arranque seguro, el módulo implementa un contador digital de histéresis temporal, exigiendo que la entrada LDR_IN permanezca en nivel alto de manera continua durante al menos 10 ms (270,000 ciclos a 27 MHz) antes de activar la bandera start_flag.
+
+Una vez validado el arranque, la señal queda enclavada permanentemente en ‘1’ hasta que ocurra un reinicio físico de la FPGA, evitando que sombras, vibraciones o cambios de iluminación durante la carrera provoquen desactivaciones accidentales.
 
 ### B. Controlador PWM de Frecuencia Portadora (`controlador_pwm.v`)
 El control continuo de velocidad de los micromotores N20 se realiza mediante Modulación por Ancho de Pulso (PWM). El módulo implementa dos generadores de rampa de 8 bits (resolución de 0 a 255). A partir de la frecuencia de reloj del sistema, se introduce un prescaler divisor entre 5 que disminuye la base de tiempos a un periodo de rampa de $48.3\ \mu\text{s}$, lo que equivale a una frecuencia portadora de **20.7 kHz**. Esta frecuencia ultrasónica es ideal para pequeños servomotores y motores DC metálicos: elimina por completo el molesto silbido mecánico audible en los bobinados y reduce de forma significativa las corrientes de rizado y disipación térmica en el chip driver (TB6612FNG).
