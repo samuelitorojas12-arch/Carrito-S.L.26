@@ -20,6 +20,7 @@ El diseño de un vehículo robótico seguidor de línea de competencia (modalida
 ---
 
 ## 2. Arquitectura Electrónica y Modular
+
 ### C. Módulo Bluetooth HC-05 (arranque_bt.v)
 
 Este módulo monitorea continuamente los datos válidos recibidos desde el receptor UART. Cuando detecta la recepción del carácter ASCII **'1'** (valor hexadecimal **0x31**), genera y activa la señal **start_flag_bt**, la cual funciona como una bandera de inicio del sistema. Una vez activada, esta señal permanece enclavada (estado lógico alto) de manera indefinida, permitiendo indicar que se ha recibido la orden de arranque. La bandera únicamente puede ser desactivada mediante una señal de **reset**, garantizando así la persistencia del comando de inicio hasta que el sistema sea reiniciado.
@@ -42,8 +43,10 @@ La señal entregada por el comparador LM393 del LDR puede contener oscilaciones 
 ### B. Controlador PWM de Frecuencia Portadora (`controlador_pwm.v`)
 El control continuo de velocidad de los micromotores N20 se realiza mediante Modulación por Ancho de Pulso (PWM). El módulo implementa dos generadores de rampa de 8 bits (resolución de 0 a 255). A partir de la frecuencia de reloj del sistema, se introduce un prescaler divisor entre 5 que disminuye la base de tiempos a un periodo de rampa de $48.3\ \mu\text{s}$, lo que equivale a una frecuencia portadora de **20.7 kHz**. Esta frecuencia ultrasónica es ideal para pequeños servomotores y motores DC metálicos: elimina por completo el molesto silbido mecánico audible en los bobinados y reduce de forma significativa las corrientes de rizado y disipación térmica en el chip driver (TB6612FNG).
 
-### C. Modulo Bluettoth HC-05 (`arranque_bt.v`)
-Escucha los datos validados provenientes del receptor UART. Si recibe el caracter ASCII '1' (Hex 0x31), activa la bandera de inicio (start_flag_bt) y la mantiene enclavada hasta que haya un reset.
+ ### C. Módulo Bluetooth HC-05 (arranque_bt.v)
+
+Este módulo se encarga de supervisar los datos recibidos y validados por el receptor UART proveniente del módulo Bluetooth HC-05. Cuando detecta la recepción del carácter ASCII **'1'** (código hexadecimal **0x31**), activa la señal **start_flag_bt**, la cual indica el inicio de la operación del sistema. Una vez establecida, esta bandera permanece activa de forma permanente mediante un mecanismo de enclavamiento, evitando que se pierda la orden de arranque. La señal únicamente se restablece a su estado inicial cuando se ejecuta un reinicio (reset) del sistema.
+
 
 ### D. Núcleo de Control y Recuperación (`seguidor_linea_core.v`)
 El núcleo implementa la máquina de control de velocidad y sentido de giro, traduciendo los estados de los sensores infrarrojos reflectantes ($S_1$ a $S_5$) en salidas de potencia de acuerdo con la tabla de verdad y la estrategia de control competitiva:
