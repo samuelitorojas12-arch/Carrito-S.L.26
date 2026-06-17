@@ -41,8 +41,10 @@ La señal entregada por el comparador LM393 del LDR puede contener oscilaciones 
 ### B. Controlador PWM de Frecuencia Portadora (`controlador_pwm.v`)
 El control continuo de velocidad de los micromotores N20 se realiza mediante Modulación por Ancho de Pulso (PWM). El módulo implementa dos generadores de rampa de 8 bits (resolución de 0 a 255). A partir de la frecuencia de reloj del sistema, se introduce un prescaler divisor entre 5 que disminuye la base de tiempos a un periodo de rampa de $48.3\ \mu\text{s}$, lo que equivale a una frecuencia portadora de **20.7 kHz**. Esta frecuencia ultrasónica es ideal para pequeños servomotores y motores DC metálicos: elimina por completo el molesto silbido mecánico audible en los bobinados y reduce de forma significativa las corrientes de rizado y disipación térmica en el chip driver (TB6612FNG).
 
-### C. Núcleo de Control y Recuperación (`arranque_bt.v`)
-Escucha los datos validados provenientes del receptor UART. Si recibe el caracter ASCII '1' (Hex 0x31), activa la bandera de inicio (start_flag_bt) y la mantiene enclavada hasta que haya un reset.
+### C. Núcleo de Control y Recuperación (arranque_bt.v)
+
+Este módulo constituye el núcleo de control encargado de gestionar la secuencia de arranque del sistema a través de comunicación Bluetooth. Supervisa continuamente los datos validados por el receptor UART y analiza la información recibida. Cuando detecta el carácter ASCII **'1'** (código hexadecimal **0x31**), activa la señal **start_flag_bt**, la cual indica que se ha recibido una orden válida de inicio. Una vez activada, esta bandera permanece enclavada para garantizar la conservación del estado de arranque, evitando pérdidas de la señal por interrupciones o variaciones temporales. La señal solo puede restablecerse mediante un reinicio (**reset**) del sistema, asegurando un funcionamiento estable y confiable.
+
 
 
 ### D. Núcleo de Control y Recuperación (`seguidor_linea_core.v`)
