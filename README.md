@@ -1,10 +1,9 @@
 # Controlador Digital de Seguidor de Línea Competitivo en FPGA Tang Nano 9K
 
-Este repositorio contiene la implementación completa de el proyecto de la materia de programación avanzada.
+Este repositorio contiene el desarrollo completo del proyecto realizado para la asignatura de Programación Avanzada, enfocado en el diseño e implementación de un sistema de control digital para un robot móvil seguidor de línea de alto rendimiento.
 
-El diseño está implementado en hardware digital paralelo sobre una FPGA **Gowin GW1NR-LV9QN88PC6/I5** (placa de desarrollo Tang Nano 9K), lo que garantiza latencias de respuesta del orden de los nanosegundos para un seguimiento preciso a altas velocidades.
+La arquitectura fue desarrollada íntegramente en hardware digital utilizando una FPGA Gowin GW1NR-LV9QN88PC6/I5 sobre la plataforma Tang Nano 9K, aprovechando las ventajas del procesamiento paralelo para ejecutar las tareas de control, monitoreo y toma de decisiones en tiempo real. Esta implementación permite alcanzar tiempos de respuesta del orden de los nanosegundos, proporcionando una alta precisión en el seguimiento de trayectoria, una rápida capacidad de reacción ante cambios en la pista y un desempeño óptimo durante operaciones a altas velocidades.
 
----
 ## Características Competitivas del Diseño
 
 1. **Arranque Autónomo por Luz (LDR):** Cumple con la regla oficial del arranque autónomo. Cuenta con un módulo digital con filtro antirrebote de 10 ms e histéresis temporal que evita arranques falsos ante flashes u oscilaciones de luz ambiental. Una vez detectada la señal de salida, la bandera de carrera se enclava de forma permanente.
