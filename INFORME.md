@@ -101,12 +101,16 @@ La estrategia de control implementada contempla distintos escenarios de operaci�
 
 Marcha Recta (00100)
 Cuando el sensor central detecta la línea, el sistema interpreta que el vehículo se encuentra correctamente alineado con la trayectoria. En esta condición, ambos motores operan en sentido de avance a velocidad máxima (VEL_MAX = 225), permitiendo alcanzar la mayor velocidad posible en tramos rectos y optimizando el tiempo de recorrido.
+
 Curvas Suaves (01100 y 00110)
 Ante una ligera desviación de la línea respecto al centro, el controlador reduce moderadamente la velocidad del motor ubicado en el interior de la curva (VEL_MED = 150), mientras mantiene el motor exterior a velocidad máxima. Esta acción genera una corrección progresiva de la trayectoria sin comprometer significativamente la velocidad del vehículo.
+
 Curvas Cerradas (01000 y 00010)
 Cuando la línea se desplaza hacia sensores más alejados del centro, se interpreta una curva de mayor intensidad. En consecuencia, el motor interno reduce su velocidad hasta un valor mínimo (VEL_MIN = 70), incrementando la diferencia de velocidades entre ambos motores y permitiendo realizar giros más pronunciados con estabilidad.
+
 Curvas Críticas o Giro de Pivote (10000 y 00001)
 En situaciones donde la línea es detectada únicamente por los sensores extremos, el sistema ejecuta una maniobra de recuperación agresiva. Para ello, el motor interno invierte su sentido de giro (VEL_REV = 130, dir = 1), mientras el motor externo continúa avanzando. Esta configuración genera un movimiento de pivote sobre el propio eje del vehículo, permitiendo corregir rápidamente desviaciones severas y recuperar la trayectoria.
+
 Pérdida Total de Línea (00000)
 Si ninguno de los sensores detecta la línea, el controlador activa un modo de búsqueda automática. Durante este proceso, se consulta el registro last_direction, que almacena la última dirección válida detectada, y se ejecuta una maniobra de pivote orientada hacia dicha dirección con el objetivo de localizar nuevamente la pista. Paralelamente, se inicia un temporizador de seguridad de 54,000,000 ciclos de reloj (aproximadamente 2 segundos). Si la línea no es recuperada dentro de este intervalo, el sistema detiene automáticamente ambos motores para evitar desplazamientos erráticos y garantizar una operación segura.
 
