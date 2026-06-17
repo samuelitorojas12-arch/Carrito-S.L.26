@@ -21,11 +21,29 @@ Las pruebas de simulación confirmaron el correcto funcionamiento del arranque s
 
 ## 1. Introducción y Cumplimiento del Reglamento
 
-El diseño de un vehículo robótico seguidor de línea de competencia (modalidad carrera de alcance) requiere maximizar la velocidad promedio en rectas y la estabilidad en curvas, garantizando a su vez el estricto cumplimiento de las normas oficiales establecidas en el reglamento:
+El desarrollo de un vehículo robótico seguidor de línea para competencias de velocidad y alcance representa un desafío que combina diseño electrónico, control digital y optimización mecánica. El objetivo principal consiste en maximizar la velocidad de desplazamiento en tramos rectos y mantener una elevada estabilidad durante la toma de curvas, sin comprometer la precisión del seguimiento de la trayectoria. Asimismo, el diseño debe cumplir rigurosamente con las especificaciones establecidas en el reglamento oficial de la competencia.
 
-1.  **Arranque Autónomo Obligatorio:** El reglamento prohíbe cualquier movimiento del carro antes del destello de la luz LED blanca de inicio. Para cumplir esto, el sistema integra un sensor óptico frontal (fotoresistencia LDR acoplada a un comparador LM393) que actúa como llave de encendido. La FPGA filtra y valida esta señal física en un módulo digital exclusivo para evitar descalificaciones por salidas en falso.
-2.  **Dimensiones Máximas (24 cm de largo, 20 cm de ancho):** El chasis de tracción diferencial cuenta con unas dimensiones de $18\text{ cm} \times 14\text{ cm}$, lo que cumple cómodamente con la regla y optimiza el momento de inercia rotacional en curvas cerradas.
-3.  **Algoritmo de Recuperación en Pista (Línea Perdida):** Ante salidas totales de la línea negra de 2 cm de ancho, el carro dispone de 10 segundos reglamentarios para reincorporarse de forma autónoma. El controlador de la FPGA memoriza la última corrección válida de los sensores infrarrojos e inicia una rotación de pivote (motores opuestos) en la misma dirección de escape para re-detectar la trayectoria. Si tras 2 segundos de búsqueda no se detecta la pista, el sistema se detiene automáticamente por seguridad.
+Para garantizar dicho cumplimiento, se consideraron los siguientes aspectos fundamentales:
+
+1. Arranque Autónomo Obligatorio
+
+De acuerdo con el reglamento, el vehículo no debe iniciar ningún movimiento antes de la señal oficial de salida emitida mediante un destello de luz LED blanca. Para satisfacer este requisito, se implementó un sistema de detección óptica basado en una fotoresistencia (LDR) acoplada a un comparador LM393, encargado de convertir la variación luminosa en una señal digital interpretable por la FPGA.
+
+Con el fin de evitar activaciones accidentales provocadas por interferencias lumínicas o variaciones del entorno, la señal es procesada por un módulo digital de filtrado y validación que verifica su estabilidad antes de habilitar el arranque. Esta estrategia garantiza un inicio confiable y evita posibles descalificaciones derivadas de falsas detecciones.
+
+2. Cumplimiento de las Restricciones Dimensionales
+
+El reglamento establece dimensiones máximas de 24 cm de largo y 20 cm de ancho para los vehículos participantes. El prototipo desarrollado emplea un sistema de tracción diferencial montado sobre un chasis compacto de aproximadamente 18 cm × 14 cm, manteniéndose ampliamente dentro de los límites permitidos.
+
+Además de cumplir con la normativa, estas dimensiones contribuyen a mejorar la maniobrabilidad del vehículo, reduciendo el momento de inercia durante los cambios de dirección y favoreciendo una respuesta más rápida en curvas cerradas.
+
+3. Recuperación Autónoma ante Pérdida de Línea
+
+Durante el recorrido, pueden presentarse situaciones en las que los sensores infrarrojos pierdan completamente la referencia de la línea de seguimiento. Para estos casos, el reglamento permite un tiempo determinado para que el vehículo recupere la trayectoria de forma autónoma.
+
+Con el propósito de incrementar la probabilidad de recuperación, el controlador implementado en la FPGA almacena la última dirección válida detectada por el sistema de sensores. Cuando ocurre una pérdida total de la línea, el algoritmo activa una maniobra de búsqueda basada en un giro de pivote orientado hacia la última dirección registrada, permitiendo localizar nuevamente la trayectoria de manera rápida y eficiente.
+
+Adicionalmente, se incorporó un mecanismo de seguridad que supervisa el tiempo de búsqueda. Si la línea no es recuperada después de dos segundos de operación continua, el sistema detiene automáticamente los motores para evitar desplazamientos indeseados y preservar la integridad del vehículo y del entorno de prueba.
 
 ---
 
