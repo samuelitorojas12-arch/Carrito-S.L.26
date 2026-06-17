@@ -20,8 +20,9 @@ El diseño de un vehículo robótico seguidor de línea de competencia (modalida
 ---
 
 ## 2. Arquitectura Electrónica y Modular
+### C. Módulo Bluetooth HC-05 (arranque_bt.v)
 
-Para reducir al mínimo la latencia del lazo de control y optimizar la mantenibilidad del software de descripción de hardware, el diseño se dividió en cuatro módulos principales interconectados de forma síncrona a un dominio de reloj de 27 MHz:
+Este módulo monitorea continuamente los datos válidos recibidos desde el receptor UART. Cuando detecta la recepción del carácter ASCII **'1'** (valor hexadecimal **0x31**), genera y activa la señal **start_flag_bt**, la cual funciona como una bandera de inicio del sistema. Una vez activada, esta señal permanece enclavada (estado lógico alto) de manera indefinida, permitiendo indicar que se ha recibido la orden de arranque. La bandera únicamente puede ser desactivada mediante una señal de **reset**, garantizando así la persistencia del comando de inicio hasta que el sistema sea reiniciado.
 
 ```
 [Entradas]                            [Núcleo de Procesamiento FPGA]                            [Salidas]
