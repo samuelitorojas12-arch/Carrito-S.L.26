@@ -5,7 +5,13 @@
 ---
 
 ## Resumen
-Este informe detalla el diseño, la implementación y la verificación de un controlador digital modular síncrono para un robot móvil seguidor de línea de alto rendimiento destinado a la competencia oficial "2ª Carrera de Carritos Seguidores de Línea 2026" QUE POSTERIORMENTE FUE MODIFICADO Y MEJORADO apartir de comentarios y propuestas del docente. El sistema, implementado en hardware sobre la FPGA Tang Nano 9K (GW1NR-LV9QN88PC6/I5), integra una estrategia de arranque autónomo por sensor de luz (LDR) con inmunidad al ruido, control de velocidad por modulación de ancho de pulso (PWM) a 20 kHz, implementacion de un modulo bluetooth HC-05 con la capacidad de emitir y recibir informacion al usuario y un algoritmo de recuperación inteligente por memoria de dirección ante la pérdida de contraste de la pista, con detención de seguridad de 2 segundos. La síntesis y el ruteo físico se realizaron en Gowin EDA, logrando un reporte final de **0 errores y 0 advertencias (warnings)** tras aplicar restricciones de tiempo (.sdc) y resolver conflictos de voltaje en los bancos lógicos del integrado.
+Este informe presenta el diseño, la implementación y la verificación de un controlador digital modular síncrono para un robot móvil seguidor de línea de alto rendimiento, desarrollado para participar en la **“2.ª Carrera de Carritos Seguidores de Línea 2026”**. El proyecto fue posteriormente optimizado y mejorado a partir de observaciones, comentarios y propuestas de mejora realizadas por el docente responsable, con el objetivo de incrementar su funcionalidad, robustez y desempeño general.
+
+El sistema fue implementado en hardware sobre la FPGA **Tang Nano 9K (GW1NR-LV9QN88PC6/I5)** e integra diversas funcionalidades avanzadas, entre las que destacan una estrategia de arranque autónomo mediante sensor de luz (LDR) con inmunidad al ruido, control de velocidad de motores mediante modulación por ancho de pulso (PWM) a 20 kHz y la incorporación de un módulo de comunicación Bluetooth **HC-05**, capaz de transmitir y recibir información para la interacción y supervisión del usuario.
+
+Asimismo, se implementó un algoritmo de recuperación inteligente basado en memoria de dirección, diseñado para permitir que el vehículo retome la trayectoria en caso de pérdida temporal del contraste de la pista. Como medida adicional de seguridad, el sistema incorpora un mecanismo de detención automática de dos segundos ante determinadas condiciones de operación.
+
+La síntesis lógica y el ruteo físico del diseño fueron realizados mediante la herramienta **Gowin EDA**, obteniéndose un resultado final libre de errores y advertencias. Para alcanzar este nivel de estabilidad fue necesario aplicar restricciones temporales mediante archivos **.sdc**, así como resolver conflictos de asignación de voltaje en los bancos lógicos de la FPGA, garantizando así el correcto funcionamiento y la confiabilidad del sistema implementado.
 
 ---
 
