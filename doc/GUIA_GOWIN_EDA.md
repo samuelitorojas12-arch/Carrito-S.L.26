@@ -71,8 +71,15 @@ El diseño competitivo está modularizado para optimizar el rendimiento y la fac
 *   **Causa**: Gowin EDA detecta que `CLK` actúa como reloj en la lógica Verilog, pero no se ha especificado su frecuencia de muestreo para el análisis de tiempos.
 *   **Solución**: Importe al proyecto el archivo `seguidor_linea.sdc`. Este archivo define formalmente el reloj con el comando `create_clock -name CLK -period 37.037`, eliminando por completo las advertencias y logrando una compilación con **0 Warnings**.
 
-### C. Conflicto de Pines Duales de Programación JTAG o MSPI
-*   **Error**: Falla la compilación al intentar utilizar pines asignados por defecto al sistema de carga de la FPGA.
-*   **Solución**: 
-    1.  Vaya a **Project > Configuration > Place & Route > Dual Purpose Pin** en Gowin EDA.
-    2.  Cambie las configuraciones de pines especiales (como MSPI o JTAG) a **Use as regular I/O** para liberar su uso.
+### C. Conflicto de Pines de Propósito Dual (JTAG/MSPI)
+
+Durante el proceso de compilación puede presentarse un error cuando se intenta asignar señales de usuario a pines reservados por defecto para las interfaces de programación y configuración de la FPGA, como **JTAG** o **MSPI**. Estos pines poseen funciones especiales predefinidas, por lo que su uso como entradas o salidas generales puede generar conflictos durante la etapa de síntesis y enrutamiento.
+
+**Solución implementada:**
+
+1. Acceder al menú **Project > Configuration > Place & Route > Dual Purpose Pin** dentro de **Gowin EDA**.
+2. Identificar los pines configurados para funciones especiales, como **JTAG** o **MSPI**.
+3. Modificar su configuración a **Use as Regular I/O**, permitiendo su utilización como pines de propósito general.
+4. Guardar los cambios y recompilar el proyecto.
+
+Esta configuración libera los pines reservados y elimina los conflictos de asignación, permitiendo que el diseño se implemente correctamente en la FPGA.
