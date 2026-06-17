@@ -18,19 +18,15 @@ module arranque_bt (
 
     // Caracter de encendido esperado (ASCII '1' = 8'h31)
     localparam [7:0] CMD_START = 8'h31;
-
-    always @(posedge CLK or negedge RST) begin
-        if (!RST) begin
-            start_flag_bt <= 1'b0;
-        end else begin
-            // Si la bandera ya se activó, se mantiene en 1 (enclavamiento)
-            if (start_flag_bt) begin
-                start_flag_bt <= 1'b1;
-            end 
-            // Si hay un dato nuevo, comprobamos si es el comando de inicio
-            else if (rx_ready) begin
-                if (rx_data == CMD_START) begin
-                    start_flag_bt <= 1'b1;
+always @(posedge CLK or negedge RST) begin
+    if (!RST) begin
+        start_flag_bt <= 1'b0;
+    end
+    else if (rx_ready && rx_data == CMD_START) begin
+        start_flag_bt <= 1'b1;
+    end
+end
+    
                 end
             end
         end
