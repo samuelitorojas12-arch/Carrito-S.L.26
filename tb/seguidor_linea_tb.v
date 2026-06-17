@@ -36,6 +36,10 @@ module seguidor_linea_tb;
     wire LED_IZQ;
     wire LED_DER;
     wire LED_STOP;
+    initial begin
+    $dumpfile("seguidor_linea_tb.vcd");
+    $dumpvars(0, seguidor_linea_tb);
+end
 
     // --- INSTANCIACIÓN DE LA UNIDAD BAJO PRUEBA (UUT) ---
     seguidor_linea uut (
