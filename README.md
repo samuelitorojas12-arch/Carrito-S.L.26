@@ -11,7 +11,10 @@ El diseño está implementado en hardware digital paralelo sobre una FPGA **Gowi
 
 2. **Comunicación Inalámbrica por Bluetooth (HC-05):** Se incorporó soporte para un módulo Bluetooth HC-05 conectado mediante una interfaz UART implementada en la FPGA Tang Nano 9K. Esta funcionalidad permite la transmisión inalámbrica de información de diagnóstico, monitoreo de sensores y recepción de comandos externos para pruebas y futuras expansiones del sistema sin necesidad de conexión física por cable.
 
-4. **Modulación PWM Dual (20.7 kHz):** Provee control continuo de velocidad de 8 bits para dos micromotores N20 a través de un puente H TB6612FNG, eliminando ruidos audibles en los bobinados y optimizando la entrega de torque.
+4. ### Modulación PWM Dual (20.7 kHz)
+
+El sistema implementa una modulación por ancho de pulso (PWM) dual con una frecuencia de operación de **20.7 kHz**, permitiendo el control independiente y continuo de la velocidad de dos micromotores N20 mediante el controlador de puente H **TB6612FNG**. La resolución de **8 bits** proporciona un ajuste preciso de la potencia suministrada a cada motor, mejorando la respuesta dinámica y el control de movimiento. Además, al operar por encima del rango audible humano, se minimizan los ruidos generados por los bobinados de los motores, incrementando la eficiencia del sistema y optimizando la entrega de torque.
+
 
 5. **Giro por Pivoteo Activo (Curvas Cerradas):** En curvas críticas, el sistema invierte físicamente el sentido de giro del motor interno (marcha atrás) y acelera el externo hacia adelante. Esto proporciona un torque diferencial máximo para virajes de emergencia sin pérdida de adherencia.
 
