@@ -95,23 +95,22 @@ La integración Bluetooth permite realizar pruebas, monitoreo y control inalámb
 
 
 ### D. Núcleo de Control y Recuperación (`seguidor_linea_core.v`)
-El núcleo implementa la máquina de control de velocidad y sentido de giro, traduciendo los estados de los sensores infrarrojos reflectantes ($S_1$ a $S_5$) en salidas de potencia de acuerdo con la tabla de verdad y la estrategia de control competitiva:
-*   **Marcha Recta (`00100`):** Máxima potencia hacia ambos motores (`VEL_MAX = 225`) en sentido directo para recortar distancias en tramos lineales.
-*   **Curvas Suaves (`01100` y `00110`):** Se desacelera levemente el motor interno a la curva (`VEL_MED = 150`) mientras el exterior se mantiene a potencia máxima para realizar correcciones sin detener el carro.
-*   **Curvas Cerradas (`01000` y `00010`):** El motor interno se frena a velocidad mínima (`VEL_MIN = 70`) para inducir un radio de giro cerrado.
-*   **Curvas Críticas / Pivote (`10000` y `00001`):** Para giros de emergencia, el motor interno se invierte físicamente en sentido de retroceso (`VEL_REV = 130`, `dir = 1`) y el exterior se mantiene en avance directo, forzando un giro rápido sobre su propio eje (torque diferencial puro).
-*   **Línea Perdida (`00000`):** Se activa un temporizador de seguridad de $54,000,000$ de ciclos (2 segundos). Mientras corre el tiempo, el núcleo consulta el registro `last_direction` y ordena un giro de pivote en el sentido donde vio por última vez la línea para recuperarla de forma inmediata.
+El módulo seguidor_linea_core.v constituye el núcleo principal del sistema de navegación, siendo el encargado de interpretar las lecturas provenientes de los cinco sensores infrarrojos reflectantes (S1–S5) y convertirlas en acciones de control para los motores. A partir de una lógica de decisión basada en una tabla de estados, el controlador determina la velocidad y el sentido de giro más adecuados para mantener al vehículo sobre la trayectoria con la mayor precisión y estabilidad posibles.
 
-### E. Indicador de Estado (indicador_estado.v`)
+La estrategia de control implementada contempla distintos escenarios de operación:
 
-El bloque de indicadores visuales controla dos LEDs físicos conectados a la FPGA:
+Marcha Recta (00100)
+Cuando el sensor central detecta la línea, el sistema interpreta que el vehículo se encuentra correctamente alineado con la trayectoria. En esta condición, ambos motores operan en sentido de avance a velocidad máxima (VEL_MAX = 225), permitiendo alcanzar la mayor velocidad posible en tramos rectos y optimizando el tiempo de recorrido.
+Curvas Suaves (01100 y 00110)
+Ante una ligera desviación de la línea respecto al centro, el controlador reduce moderadamente la velocidad del motor ubicado en el interior de la curva (VEL_MED = 150), mientras mantiene el motor exterior a velocidad máxima. Esta acción genera una corrección progresiva de la trayectoria sin comprometer significativamente la velocidad del vehículo.
+Curvas Cerradas (01000 y 00010)
+Cuando la línea se desplaza hacia sensores más alejados del centro, se interpreta una curva de mayor intensidad. En consecuencia, el motor interno reduce su velocidad hasta un valor mínimo (VEL_MIN = 70), incrementando la diferencia de velocidades entre ambos motores y permitiendo realizar giros más pronunciados con estabilidad.
+Curvas Críticas o Giro de Pivote (10000 y 00001)
+En situaciones donde la línea es detectada únicamente por los sensores extremos, el sistema ejecuta una maniobra de recuperación agresiva. Para ello, el motor interno invierte su sentido de giro (VEL_REV = 130, dir = 1), mientras el motor externo continúa avanzando. Esta configuración genera un movimiento de pivote sobre el propio eje del vehículo, permitiendo corregir rápidamente desviaciones severas y recuperar la trayectoria.
+Pérdida Total de Línea (00000)
+Si ninguno de los sensores detecta la línea, el controlador activa un modo de búsqueda automática. Durante este proceso, se consulta el registro last_direction, que almacena la última dirección válida detectada, y se ejecuta una maniobra de pivote orientada hacia dicha dirección con el objetivo de localizar nuevamente la pista. Paralelamente, se inicia un temporizador de seguridad de 54,000,000 ciclos de reloj (aproximadamente 2 segundos). Si la línea no es recuperada dentro de este intervalo, el sistema detiene automáticamente ambos motores para evitar desplazamientos erráticos y garantizar una operación segura.
 
-LED Rojo (pin 25): indica estado de espera, detención o error.
-
-LED Verde (pin 26): indica funcionamiento correcto, conexión activa y vehículo en movimiento.
-
-Estos indicadores permiten conocer de forma inmediata el estado operativo del carro durante pruebas y competencias.
-
+Gracias a esta estrategia de control jerárquica, el vehículo es capaz de adaptarse dinámicamente a diferentes condiciones de la pista, manteniendo un equilibrio entre velocidad, precisión y capacidad de recuperación ante situaciones críticas.
 ---
 
 ## 3. Mapa de Pines del Sistema
